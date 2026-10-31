@@ -1,12 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { router } from 'expo-router';
 import { Colors, Radius, Spacing, Typography } from '@/constants/theme';
-
 
 export default function PlaceCard({ place }) {
   const hasLocation = place.latitude !== null && place.longitude !== null;
 
   return (
-    <View style={styles.card} accessible accessibilityLabel={`${place.name}, ${place.category}`}>
+    <Pressable
+      onPress={() => router.push(`/place/${place.id}`)}
+      accessibilityRole="button"
+      accessibilityLabel={`${place.name}, ${place.category}. Open details`}
+      style={({ pressed }) => [styles.card, pressed && styles.pressed]}>
       <View style={styles.headerRow}>
         <Text style={styles.name}>{place.name}</Text>
         {place.isSample && (
@@ -18,7 +22,7 @@ export default function PlaceCard({ place }) {
       <Text style={styles.category}>{place.category}</Text>
       <Text style={styles.description}>{place.description}</Text>
       {!hasLocation && <Text style={styles.warning}>Map location not verified yet</Text>}
-    </View>
+    </Pressable>
   );
 }
 
@@ -36,6 +40,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
   },
+  pressed: { opacity: 0.7 },
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
   name: { ...Typography.heading, color: Colors.text, flex: 1 },
   badge: {
