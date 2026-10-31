@@ -93,9 +93,9 @@ export const PLACES = [
     latitude: 8.4863819,
     longitude: 124.6572223,
     isSample: false,
-    verified: false,
+    verified: true,
     published: true,
-    sourceNote: LIBRARY_SERVICES_PAGE,
+   sourceNote: `${LIBRARY_SERVICES_PAGE} (floor info). Coordinates: entered by developer from Google Maps on 31-10-2026, not verified by USTP.`,
   },
   {
     id: 'itb-phase-2',
