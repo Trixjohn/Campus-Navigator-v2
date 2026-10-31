@@ -1,15 +1,32 @@
+import { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import CampusMap from '@/components/map/CampusMap';
+import SelectedPlaceCard from '@/components/map/SelectedPlaceCard';
 import { getAllPlaces } from '@/services/placesService';
 import { Colors, Radius, Spacing, Typography } from '@/constants/theme';
 
 export default function MapScreen() {
-  const all = getAllPlaces();
-  const mappable = all.filter((p) => p.latitude !== null && p.longitude !== null);
+  const { placeId, t } = useLocalSearchParams();
+  const [selectedId, setSelectedId] = useState(null);
+
+  const all = useMemo(() => getAllPlaces(), []);
+  const mappable = useMemo(
+    () => all.filter((p) => p.latitude !== null && p.longitude !== null),
+    [all]
+  );
+  const selected = mappable.find((p) => p.id === selectedId) || null;
+
+  // "t" changes every time, so opening the same place twice still works.
+  useEffect(() => {
+    if (placeId) {
+      setSelectedId(String(placeId));
+    }
+  }, [placeId, t]);
 
   return (
     <View style={styles.container}>
-      <CampusMap places={mappable} />
+      <CampusMap places={mappable} selectedId={selectedId} onSelect={setSelectedId} />
       <View style={styles.banner}>
         <Text style={styles.bannerText}>
           {mappable.length === 0
@@ -17,6 +34,7 @@ export default function MapScreen() {
             : `${mappable.length} of ${all.length} places have a map location.`}
         </Text>
       </View>
+      {selected && <SelectedPlaceCard place={selected} onClose={() => setSelectedId(null)} />}
     </View>
   );
 }

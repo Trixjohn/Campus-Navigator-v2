@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { getPlaceById } from '@/services/placesService';
 import { Colors, Radius, Spacing, Typography } from '@/constants/theme';
 
@@ -40,14 +40,28 @@ export default function PlaceDetailScreen() {
         <Text style={styles.category}>{place.category}</Text>
         <Text style={styles.body}>{place.description}</Text>
       </View>
-            <View style={styles.card}>
-        <Text style={styles.heading}>Floor information</Text>
-        {place.floorInfo.map((line) => (
-          <Text key={line} style={styles.body}>
-            {'\u2022'} {line}
+      <View style={styles.card}>
+        <Text style={styles.heading}>Location</Text>
+        {hasLocation ? (
+          <>
+            <Text style={styles.body}>
+              {place.verified
+                ? 'A verified map location is recorded for this place.'
+                : 'A map location is recorded but has not been confirmed on campus.'}
+            </Text>
+            <Pressable
+              onPress={() => router.push({ pathname: '/map', params: { placeId: place.id, t: String(Date.now()) } })}
+              accessibilityRole="button"
+              accessibilityLabel={`Show ${place.name} on the map`}
+              style={({ pressed }) => [styles.mapButton, pressed && styles.pressed]}>
+              <Text style={styles.mapButtonText}>Show on map</Text>
+            </Pressable>
+          </>
+        ) : (
+          <Text style={styles.warning}>
+            Map location not verified yet. Directions are not available for this place.
           </Text>
-        ))}
-        <Text style={styles.note}>From published USTP pages. Room numbers are not available yet.</Text>
+        )}
       </View>
 
       <View style={styles.card}>
@@ -114,4 +128,14 @@ const styles = StyleSheet.create({
   body: { ...Typography.body, color: Colors.text },
   note: { ...Typography.caption, color: Colors.textSecondary },
   warning: { ...Typography.body, color: Colors.danger },
+
+    mapButton: {
+    marginTop: Spacing.sm,
+    backgroundColor: Colors.primary,
+    borderRadius: Radius.pill,
+    paddingVertical: Spacing.sm,
+    alignItems: 'center',
+  },
+  pressed: { opacity: 0.7 },
+  mapButtonText: { ...Typography.body, color: Colors.onPrimary, fontWeight: '600' },
 });
