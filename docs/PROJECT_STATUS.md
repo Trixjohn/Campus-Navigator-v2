@@ -1,9 +1,9 @@
 # Project status
 
-## Completed (tested by developer)
+## Completed (tested developer)
 - Phase 1: JavaScript conversion, theme, five tabs (user reported "it works")
 
-## Completed (NOT yet tested)
+## Completed (tested)
 - Phase 3: Places directory, search, categories, detail screen, sourced unverified data
 
 ## Pending
