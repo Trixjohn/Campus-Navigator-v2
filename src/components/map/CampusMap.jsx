@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { CAMPUS_CAMERA } from '@/constants/campus';
 
-export default function CampusMap({ places, selectedId, onSelect }) {
+export default function CampusMap({ places, selectedId, onSelect, userLocation }) {
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -21,11 +21,26 @@ export default function CampusMap({ places, selectedId, onSelect }) {
     }
   }, [selectedId, places]);
 
+  useEffect(() => {
+    if (userLocation && mapRef.current) {
+      mapRef.current.animateToRegion(
+        {
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
+          latitudeDelta: 0.003,
+          longitudeDelta: 0.003,
+        },
+        400
+      );
+    }
+  }, [userLocation]);
+
   return (
     <MapView
       ref={mapRef}
       style={styles.map}
       initialRegion={CAMPUS_CAMERA}
+      showsUserLocation={Boolean(userLocation)}
       accessibilityLabel="Campus map">
       {places.map((place) => (
         <Marker
