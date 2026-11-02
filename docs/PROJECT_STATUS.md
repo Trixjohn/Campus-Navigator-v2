@@ -20,3 +20,7 @@
 
 
 - Phase 8 step 1: Express server skeleton (/health and 404 reply tested on the computer)
+
+- /api/ask returns at most 3 matches, so a question like "library" hides the 4th match
+- /api/ask answers are floor-info lines only; for some buildings (e.g. gymnasium) this does not say where the building itself is
+- server/src/data/places.js is a manual copy of src/data/places.js and can drift
