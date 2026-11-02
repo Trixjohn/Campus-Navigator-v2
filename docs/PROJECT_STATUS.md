@@ -17,3 +17,6 @@
 - Phase 1 commit and TypeScript cleanup (npm uninstall typescript) results not yet confirmed
 - Log showed "iOS" while testing on Android; unexplained
 - No full room list is published by USTP (searched Oct 2026)
+
+
+- Phase 8 step 1: Express server skeleton (/health and 404 reply tested on the computer)
