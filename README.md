@@ -1,8 +1,40 @@
-# Welcome to your Expo app 👋
+# USTP Campus Navigator
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A student-developed campus navigation app for the University of Science and
+Technology of Southern Philippines (USTP), Cagayan de Oro campus.
+
+**This is an educational student project. It is NOT an official USTP application.**
+
+This is an [Expo](https://expo.dev) project created with
+[`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+## Current status
+
+Works and tested on iPhone (Expo Go):
+
+- Five tabs: Home, Map, Ask AI, Places, More (Home, Ask AI and More are placeholders)
+- Places directory with search, nicknames, categories and detail screens
+- Map with markers, a selected-place card and "Show on map"
+- "My location" button (handles permission denied and Location Services off)
+
+Not built yet: directions and routing, Ask AI, favorites, feedback,
+emergency information, settings.
+
+## Important: data accuracy
+
+- All places are marked UNVERIFIED. Nothing has been confirmed by USTP.
+- Floor information comes from public USTP web pages (see each place's source note).
+- Only the ICT Building has map coordinates. They were copied from Google Maps
+  and are not verified on site.
+- USTP does not publish a complete list of room numbers, so none are included.
 
 ## Get started
+
+Requirements:
+
+- Node.js 20 or newer
+- [Expo Go](https://expo.dev/go) on your phone (this project uses Expo SDK 58)
+- Phone and computer on the same Wi-Fi
 
 1. Install dependencies
 
@@ -13,44 +45,47 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 2. Start the app
 
    ```bash
-   npx expo start
+   npx expo start -c
    ```
 
-In the output, you'll find options to open the app in a
+3. Scan the QR code with Expo Go.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The web version is not supported (the map library is mobile-only).
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+You can start developing by editing the files inside the **src/app** directory.
+This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## Project structure
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+src/app/          screens (Expo Router)
+src/components/   reusable UI, places and map components
+src/constants/    theme and campus map settings
+src/data/         campus place records (unverified)
+src/services/     data search and location logic
+docs/             project status notes
+server/           Express server (in progress, not required to run the app)
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## Language
 
-### Other setup steps
+JavaScript and JSX only. No TypeScript.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Known limitations
+
+- Tested only on iPhone with Expo Go. Android is untested.
+- No routing or directions: there is no verified pathway data.
+- The Ask AI feature is not built yet. No AI API key is configured.
+- A production build needs its own map setup.
+
+## Security notes
+
+- Never commit API keys or passwords. Keep secrets in a local `.env` file,
+  which is listed in `.gitignore`.
 
 ## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Expo documentation](https://docs.expo.dev/): fundamentals and guides.
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): a step-by-step tutorial.
+- [Expo on GitHub](https://github.com/expo/expo)
+- [Discord community](https://chat.expo.dev)
