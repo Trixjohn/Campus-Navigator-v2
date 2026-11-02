@@ -8,6 +8,7 @@ export default function CategoryChips({ categories, selected, onSelect }) {
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
+      style={styles.scroll}
       contentContainerStyle={styles.row}>
       {all.map((category) => {
         const isSelected = category === selected;
@@ -29,7 +30,8 @@ export default function CategoryChips({ categories, selected, onSelect }) {
 }
 
 const styles = StyleSheet.create({
-  row: { gap: Spacing.sm, paddingVertical: Spacing.sm },
+  scroll: { flexGrow: 0, flexShrink: 0 },
+  row: { gap: Spacing.sm, paddingVertical: Spacing.sm, alignItems: 'center' },
   chip: {
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
